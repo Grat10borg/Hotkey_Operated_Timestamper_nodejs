@@ -41,6 +41,7 @@ const server = http.createServer((req, res) => {
 
 server.listen(port, hostname, () => {
   console.log(`H.O.T is now running on [ http://${hostname}:${port}/ ]`);
-  console.log("found: "+ timestampInfo.streamCount + " steams");
+   console.log('\x1b[36m', 'sometext' ,'\x1b[0m'); 
+	console.log("found: "+ timestampInfo.streamCount + " steams");
 });
 

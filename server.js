@@ -39,9 +39,24 @@ const server = http.createServer((req, res) => {
   //console.log(infowrite.parseTimestamps());
 });
 
+
 server.listen(port, hostname, () => {
-  console.log(`H.O.T is now running on [ http://${hostname}:${port}/ ]`);
-   console.log('\x1b[36m', 'sometext' ,'\x1b[0m'); 
-	console.log("found: "+ timestampInfo.streamCount + " steams");
+   // draw hot logo
+   DrawHOTLogo();
+	
+   // draw table with timestamps data
+   console.table([{
+	   "streams": timestampInfo.streamCount,
+	   "recordings": timestampInfo.recordCount,
+	   "timestamps": timestampInfo.hotkeyPresses}]);
+   console.log(`\x1b[36m`, "..."); // spacer
+
+   // write that H.O.T is running on the server
+   console.log(`\x1b[36m`, `H.O.T is now running on [`,
+	   `\x1b[0m`,`http://${hostname}:${port}/`,`\x1b[36m`,`]`);
 });
+
+function DrawHOTLogo() {
+	console.log("drawing logo..");	
+}
 

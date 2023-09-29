@@ -37,6 +37,8 @@ exports.parseTimestamps = function (raw_timestamps) {
 	let timestamps = {
 		streams: [],
 		recordings: [],
+		streamstxt: [],
+		reccordingstxt: [],
 	}
 	
 	// split up each line in raw times
@@ -115,7 +117,20 @@ exports.parseTimestamps = function (raw_timestamps) {
 
 	}
 
+	// don't sort timestamps if there are none
+	if(timestamps.streams.length > 0) {
+
+	}
+	if(timestamps.recordings.length > 0) {
+
+	}
+
+	/*
+	 * trims timestamp into its smallest size
+	 */
+	function trimTimestamp(timestamp) {
 	
+	}
 
 	//let streams = timestamps.match(/EVENT:START*EVENT:STOP/);
 

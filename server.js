@@ -26,7 +26,7 @@ const server = http.createServer((req, res) => {
  /**
  * send raw timestamps to timestamp parsing module
  */
-  let parsedTimestamps = infowrite.parseTimestamps(rawTimestamps); 
+  let parsedTimestamps = infowrite.parseTimestamps(rawTimestamps, config.config); 
   console.log(parsedTimestamps);
 
  /**
@@ -34,15 +34,15 @@ const server = http.createServer((req, res) => {
  */
   //res.write(parsedTimestamps);
 
-  //res.write("Infowriter: " + infowrite.parseTimestamps("Timestampy!"));
-  //res.end('<p>activate <strong>gamer mode</strong>... have a nice day :3</p>');
+  res.write("Infowriter: " + infowrite.parseTimestamps("Timestampy!"));
+  res.end('<p>activate <strong>gamer mode</strong>... have a nice day :3</p>');
   //console.log(infowrite.parseTimestamps());
 });
 
 
 server.listen(port, hostname, () => {
    // draw hot logo
-   DrawHOTLogo();
+   DrawHOTLogo(); // on pause
 	
    // draw table with timestamps data
    console.table([{
@@ -56,7 +56,35 @@ server.listen(port, hostname, () => {
 	   `\x1b[0m`,`http://${hostname}:${port}/`,`\x1b[36m`,`]`);
 });
 
+/*
+ * draws the H.O.T logo with console logs
+ */
 function DrawHOTLogo() {
-	console.log("drawing logo..");	
+	// underscore for some reason, makes it not create problems!
+	
+	console.log(`\x1b[36m`, "_HOT", `\x1b[0m`);
+	console.log(`\x1b[35m`, "_IS",`\x1b[0m`);
+	console.log(`\x1b[37m`, "_STARTING",`\x1b[0m`);
+	console.log(`\x1b[35m`, "_RIGHT",`\x1b[0m`);
+	console.log(`\x1b[36m`, "_NOW",`\x1b[0m`);
+
+	//console.log(`\x1b[36`, "_█▒▒░▒░░░░░▒░▒▒█");
+	//console.log(`\x1b[36`, "_▒█▓▓▓▓▓▓▓▓▓▓▓█▒");
+	//console.log(`\x1b[36`, "_▒▓░░░░░░░░░░░▓▒");
+	//console.log(`\x1b[36`, "_▒▓░░░░░░░░░░░▓▒");
+	//console.log(`\x1b[36`, "_▒▓░█░░░░░░░█░▓▒");
+	//console.log(`\x1b[36`, "_▒▓░░█░░░░░█░░▓▒");
+	//console.log(`\x1b[36`, "_▒▓░░█▓▓▓▓▓█░░▓▒");
+	//console.log(`\x1b[36`, "_▒▓░▓█▓▓█▓▓█▓░▓▒");
+	//console.log(`\x1b[36`, "_▒▓░░░░░░░░░░░▓▒");
+	//console.log(`\x1b[36`, "_▒▓░░░░█░█░░░░▓▒");
+	//console.log(`\x1b[36`, "_▒▓░░░░░█░░░░░▓▒");
+	//console.log(`\x1b[36`, "_▒▓░░░░░░░░░░░▓▒");
+	//console.log(`\x1b[36`, "_▒▓▓░░░░░░░░░▓▓▒");
+	//console.log(`\x1b[36`, "_▒█▓▓▓▓▓▓▓▓▓▓▓█▒");
+	//console.log(`\x1b[36`, "_▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒");
+	//console.log(`\x1b[36`, "_▒▒██▒█▒█▒█▒██▒▒");
+	//console.log(`\x1b[36`, "_█▒▒▒▒▒▒▒▒▒▒▒▒▒█");
+
 }
 

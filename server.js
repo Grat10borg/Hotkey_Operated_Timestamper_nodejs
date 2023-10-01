@@ -19,23 +19,39 @@ let timestampInfo = infowrite.returnStampInfo(rawTimestamps);
 
 /*start server*/
 const server = http.createServer((req, res) => {
-  res.statusCode = 200; // 200 == success
-  res.setHeader('Content-Type', 'text/html');
+  console.log(req);
+  if(req.url === 'website/style.css') {
+  	fs.readFile("website/style.css", function(err, css){
+	  	// write head is two functions res.status code & content type
+		res.writeHead(200, {'Content-Type': 'text/css'});
+		res.write(css);
+		res.end();
+ 	 });
+
+  }
+  else {
+  	fs.readFile("website/index.html", function(err, html){
+	  	// write head is two functions res.status code & content type
+		res.writeHead(200, {'Content-Type': 'text/html'});
+		res.write(html);
+		res.end();
+ 	 });
+ 	 }
 
 
  /**
  * send raw timestamps to timestamp parsing module
  */
-  let parsedTimestamps = infowrite.parseTimestamps(rawTimestamps, config.config); 
-  console.log(parsedTimestamps);
+  //let parsedTimestamps = infowrite.parseTimestamps(rawTimestamps, config.config); 
+  //console.log(parsedTimestamps);
 
  /**
  * build the page the timestamps are displayed on
  */
   //res.write(parsedTimestamps);
 
-  res.write("Infowriter: " + infowrite.parseTimestamps("Timestampy!"));
-  res.end('<p>activate <strong>gamer mode</strong>... have a nice day :3</p>');
+  //res.write("Infowriter: " + infowrite.parseTimestamps("Timestampy!"));
+  //res.end('<p>activate <strong>gamer mode</strong>... have a nice day :3</p>');
   //console.log(infowrite.parseTimestamps());
 });
 
@@ -62,11 +78,11 @@ server.listen(port, hostname, () => {
 function DrawHOTLogo() {
 	// underscore for some reason, makes it not create problems!
 	
-	console.log(`\x1b[36m`, "_HOT", `\x1b[0m`);
-	console.log(`\x1b[35m`, "_IS",`\x1b[0m`);
-	console.log(`\x1b[37m`, "_STARTING",`\x1b[0m`);
-	console.log(`\x1b[35m`, "_RIGHT",`\x1b[0m`);
-	console.log(`\x1b[36m`, "_NOW",`\x1b[0m`);
+	console.log(`\x1b[36m`, "┌──────────────────────┐", `\x1b[0m`);
+	console.log(`\x1b[35m`, "├──────────────────────┤",`\x1b[0m`);
+	console.log(`\x1b[37m`, "├──────────────────────┤",`\x1b[0m`);
+	console.log(`\x1b[35m`, "├──────────────────────┤",`\x1b[0m`);
+	console.log(`\x1b[36m`, "└──────────────────────┘",`\x1b[0m`);
 
 	//console.log(`\x1b[36`, "_█▒▒░▒░░░░░▒░▒▒█");
 	//console.log(`\x1b[36`, "_▒█▓▓▓▓▓▓▓▓▓▓▓█▒");

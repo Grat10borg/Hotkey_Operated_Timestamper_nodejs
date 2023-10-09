@@ -26,19 +26,19 @@ exportAllTimestamps();
 
 function exportAllTimestamps() {
 	let timestamps = infowrite.parseTimestamps(rawTimestamps, config.config);	
-	
-	//console.log(timestamps.streams);
+		
+        console.log(timestamps);
 	for(index = 0; index < timestamps.streams.length; index++) {
 		let currentStream = timestamps.streams[index];	
-		//console.log(currentStream);
+		console.log(index);
 	
-		console.log(currentStream.timestamps);
+		//console.log(currentStream.timestamps);
 		let streamtxt = currentStream.timestamps.join("\r");	
 		
 		console.log(streamtxt);
 
 		let path = config.config.export_to+
-			"steam_"+
+			"stream_"+
 			currentStream.startdate+
 			"_to_"
 			+currentStream.enddate;
@@ -49,7 +49,7 @@ function exportAllTimestamps() {
 			path,
 			streamtxt, function(err){
 			if(err) console(err);
-			console.log("saved");
+			//console.log("saved");
 		});
 	}
 }

@@ -45,6 +45,7 @@ exports.parseTimestamps = function (raw_timestamps, config) {
 	// run through each line and test for data
 	let isStream = true;
 	let isTimestamp = false;
+	let lastDate = "";
 
 	// holds general data about timestamps
 	let streamObj = {
@@ -71,11 +72,12 @@ exports.parseTimestamps = function (raw_timestamps, config) {
 	 *
 	 */
 	for(index = 0; index < textline.length; index++) {
-	
+		
+
           // if it isn't a stream	
 	  if(textline[index].match(/EVENT:START\sRECORDING/)) {
 		isStream = false;
-		
+			
 		let res = textline[index].split("@");
 		res = res[1].replace("\r", "").substring(1).replace(" ", "_"); 
 		// remove space between @> <20/293
@@ -120,6 +122,7 @@ exports.parseTimestamps = function (raw_timestamps, config) {
 	  if(textline[index].match(/not\s(recording)/) ||
 	     textline[index].match(/not\s(streaming)/))
 		continue;
+		
 
           // if isStream is true
 	  if(isStream) {
@@ -142,8 +145,7 @@ exports.parseTimestamps = function (raw_timestamps, config) {
 	  }
 	
 	  // if we detect it's end of recording/stream do this
-	  if(textline[index].match(/EVENT:STOP/)) {
-		if(isStream) {
+	  if(textline[index].match(/EVENT:STOP\sSTREAM/)) {
 			/*saves ending date of the stream*/
 			let res = textline[index].split("@");
 			res = res[1].replace("\r", 
@@ -160,21 +162,26 @@ exports.parseTimestamps = function (raw_timestamps, config) {
 			  else
 			    streamArr.unshift(config.starting_dot+" 0:00 "
 				  +config.starting_screen_name)
-
 			
-			
-			// save 
+			 // NOTE: arrays of objects put a refercence
+			 //to / not a value
+			 // of the object, so we need to create a 
+		         // basic throw away obj to use in the push
+			 let obj = {};
 			 /**
 			 * put array of stream timestamps into
 			 * object with start date & end date
 			 */
 			  streamObj.timestamps = streamArr;
-			  timestamps.streams.push(streamObj);
+			  
+			  // put all values from streamobj into new obj
+		          Object.assign(obj, streamObj);
+			  
+			  // save
+			  timestamps.streams.push(obj);
 			  streamArr = []; // clear
-			}
-			else streamArr = [];
-		}
-		else {
+	}
+	else if(textline[index].match(/EVENT:STOP\sRECORDING/)) {
 			/*Saving ending date of the recording*/
 			let res = textline[index].split("@");
 			res = res[1].replace("\r", 
@@ -196,8 +203,16 @@ exports.parseTimestamps = function (raw_timestamps, config) {
 				  +config.starting_screen_name)
 
 			  // save 
+
+			 let obj = {};
+			 /**
+			 * put array of stream timestamps into
+			 * object with start date & end date
+			 */
+			 Object.assign(obj, recordObj);
+
 			  recordObj.timestamps = recordArr;
-			  timestamps.recordings.push(recordObj);
+			  timestamps.recordings.push(obj);
 			  recordArr = [];
 			  // clear recording array for next run
 			}

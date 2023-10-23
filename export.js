@@ -20,37 +20,79 @@ console.table([{
   "recordings": timestampInfo.recordCount,
   "timestamps": timestampInfo.hotkeyPresses}]);
 
-console.log(`\x1b[36m`, "..."); // spacer
+//console.log(`\x1b[36m`, "..."); // spacer
 
 exportAllTimestamps();
 
 function exportAllTimestamps() {
 	let timestamps = infowrite.parseTimestamps(rawTimestamps, config.config);	
 		
-        console.log(timestamps);
+        //console.log(timestamps);
 	for(index = 0; index < timestamps.streams.length; index++) {
+
+		// setup
 		let currentStream = timestamps.streams[index];	
-		console.log(index);
-	
-		//console.log(currentStream.timestamps);
 		let streamtxt = currentStream.timestamps.join("\r");	
-		
-		console.log(streamtxt);
+	
+		let start_date;
+		let end_date;
+		if(config.config.turn_off_timestamp_extended_date == true) 
+		{
+			let res = currentStream.startdate.split("_");	
+			start_date = res[0];
+			res = currentStream.enddate.split("_");
+			end_date = res[0];
+		}
+		else {
+			start_date = currentStream.startdate;
+			end_date = currentStream.enddate;
+		}
+
+		// printing timestamps
+		if(config.config.turn_off_timestamp_only == true)
+		// if we're making desciptions and not only timestamps
+		{
+			// loop through differing languages
+			for(i=0; i < config.config.descs.length; i++){
+			let desc_language = config.config.descs[i];
+
+			let path = config.config.export_to+
+			desc_language.print_out_code+
+			start_date+
+			"_to_"
+			+end_date;
+
+			let beforeDesc = fs.readFileSync(
+			desc_language.before_path, 'utf8');
+
+			let afterDesc = fs.readFileSync(
+			desc_language.after_path, 'utf8');
+
+			// add beforeDesc & afterDesc 
+			// for this speficic languages
+			streamtxt = beforeDesc+"\n"+streamtxt+
+				    "\n"+afterDesc
+			
+			// print out [tag]'ed timestamp files
+			fs.appendFile(path,
+			streamtxt, function(err){
+			if(err) console(err);});
+			}
+		}
+		else {
 
 		let path = config.config.export_to+
-			"stream_"+
-			currentStream.startdate+
+			"[Timestamp]_"+
+			start_date+
 			"_to_"
-			+currentStream.enddate;
-
-		console.log(path);
+			+end_date;
 
 		fs.appendFile(
 			path,
 			streamtxt, function(err){
 			if(err) console(err);
-			//console.log("saved");
 		});
+		}	
 	}
 }
 

@@ -1,0 +1,16 @@
+{
+  "name": "HOT_Hotkey_Operated_Timestamper",
+  "desciption": "nodejs version of the Hotkey Operated Timestamper",
+  "homepage": "https://github.com/Grat10borg/Hotkey_Operated_Timestamper_nodejs",
+  "version": "0.1",
+  "repository": {
+	"type" : "git",
+	"url": "https://github.com/Grat10borg/Hotkey_Operated_Timestamper_nodejs"  
+  },
+  "bin": {
+	"hot": "./index.js"  
+  },
+  "dependencies": {
+    "commander": "^11.1.0"
+  }
+}

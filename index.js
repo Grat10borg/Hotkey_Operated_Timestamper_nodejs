@@ -43,8 +43,6 @@ program.command('export')
  * draws the H.O.T logo with console logs
  */
 function DrawHOTLogo() {
-	console.log(exportstamp);
-	console.log(infowrite);
 	// underscore for some reason, makes it not create problems!
 	
 	console.log(`\x1b[36m`, "┌──────────────────────┐",`\x1b[0m`);

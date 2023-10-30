@@ -66,35 +66,3 @@ server.listen(port, hostname, () => {
 	   `\x1b[0m`,`http://${hostname}:${port}/`,`\x1b[36m`,`]`);
 });
 
-/*
- * draws the H.O.T logo with console logs
- */
-function DrawHOTLogo() {
-	// underscore for some reason, makes it not create problems!
-	
-	console.log(`\x1b[36m`, "┌──────────────────────┐", `\x1b[0m`);
-	console.log(`\x1b[35m`, "├──────────────────────┤",`\x1b[0m`);
-	console.log(`\x1b[37m`, "├──────────────────────┤",`\x1b[0m`);
-	console.log(`\x1b[35m`, "├──────────────────────┤",`\x1b[0m`);
-	console.log(`\x1b[36m`, "└──────────────────────┘",`\x1b[0m`);
-
-	//console.log(`\x1b[36`, "_█▒▒░▒░░░░░▒░▒▒█");
-	//console.log(`\x1b[36`, "_▒█▓▓▓▓▓▓▓▓▓▓▓█▒");
-	//console.log(`\x1b[36`, "_▒▓░░░░░░░░░░░▓▒");
-	//console.log(`\x1b[36`, "_▒▓░░░░░░░░░░░▓▒");
-	//console.log(`\x1b[36`, "_▒▓░█░░░░░░░█░▓▒");
-	//console.log(`\x1b[36`, "_▒▓░░█░░░░░█░░▓▒");
-	//console.log(`\x1b[36`, "_▒▓░░█▓▓▓▓▓█░░▓▒");
-	//console.log(`\x1b[36`, "_▒▓░▓█▓▓█▓▓█▓░▓▒");
-	//console.log(`\x1b[36`, "_▒▓░░░░░░░░░░░▓▒");
-	//console.log(`\x1b[36`, "_▒▓░░░░█░█░░░░▓▒");
-	//console.log(`\x1b[36`, "_▒▓░░░░░█░░░░░▓▒");
-	//console.log(`\x1b[36`, "_▒▓░░░░░░░░░░░▓▒");
-	//console.log(`\x1b[36`, "_▒▓▓░░░░░░░░░▓▓▒");
-	//console.log(`\x1b[36`, "_▒█▓▓▓▓▓▓▓▓▓▓▓█▒");
-	//console.log(`\x1b[36`, "_▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒");
-	//console.log(`\x1b[36`, "_▒▒██▒█▒█▒█▒██▒▒");
-	//console.log(`\x1b[36`, "_█▒▒▒▒▒▒▒▒▒▒▒▒▒█");
-
-}
-

@@ -6,11 +6,11 @@
  */
 const config = require('./config');
 const infowrite = require('./infowriter_parse');
+const exportstamp = require('./export_timestamps');
 
 const fs = require('fs');
 const { Command } = require('commander');
 const program = new Command();
-const exportstamp = require('./exports');
 
 let rawTimestamps = fs.readFileSync(
 config.config.timestamp_path, 'utf8');
@@ -43,6 +43,8 @@ program.command('export')
  * draws the H.O.T logo with console logs
  */
 function DrawHOTLogo() {
+	console.log(exportstamp);
+	console.log(infowrite);
 	// underscore for some reason, makes it not create problems!
 	
 	console.log(`\x1b[36m`, "┌──────────────────────┐",`\x1b[0m`);

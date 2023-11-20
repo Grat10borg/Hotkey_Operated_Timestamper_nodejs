@@ -45,11 +45,16 @@ exports.exportAllTimestamps = function() {
 			for(i=0; i < config.config.descs.length; i++){
 			let desc_language = config.config.descs[i];
 
-			let path = config.config.export_to+
-			desc_language.print_out_code+
+				
+			let path = 
+			config.config.export_to+
+			desc_language.print_out_code+"/"+
+			"["+desc_language.print_out_code+"]"+
 			start_date+
 			"_to_"
 			+end_date;
+
+			console.log(path);
 
 			let beforeDesc = fs.readFileSync(
 			desc_language.before_path, 'utf8');
@@ -63,20 +68,20 @@ exports.exportAllTimestamps = function() {
 				    "\n"+afterDesc
 			
 			// print out [tag]'ed timestamp files
-			fs.appendFile(path,
+			fs.writeFile(path,
 			streamtxt, function(err){
-			if(err) console(err);});
+			if(err) console.error(err);});
 			}
 		}
 		else {
 
-		let path = config.config.export_to+
+		let path = config.config.export_to+"timestamps/"+
 			"[Timestamp]_"+
 			start_date+
 			"_to_"
 			+end_date;
 
-		fs.appendFile(
+		fs.writeFile(
 			path,
 			streamtxt, function(err){
 			if(err) console(err);

@@ -1,6 +1,6 @@
 // specifies the tag & gathering point for english timestamps
 let english = {
-	print_out_code: "[eng]",
+	print_out_code: "eng",
 	before_path: "./description/beforeTimestamps.txt",
 	after_path: "./description/afterTimestamps.txt",
 };

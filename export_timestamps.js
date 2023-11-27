@@ -10,13 +10,11 @@ const infowrite = require('./infowriter_parse');
 */
 let rawTimestamps = fs.readFileSync(
 config.config.timestamp_path, 'utf8');
-//exportAllTimestamps();
 
 exports.exportAllTimestamps = function() {
-	console.log("Timestamps exported, thanks for using H.O.T");
 	let timestamps = infowrite.parseTimestamps(rawTimestamps, config.config);	
-		
-        //console.log(timestamps);
+    // for looping and exporting all timestamps
+	// into folders named after lang code..
 	for(index = 0; index < timestamps.streams.length; index++) {
 
 		// setup
@@ -25,6 +23,38 @@ exports.exportAllTimestamps = function() {
 	
 		let start_date;
 		let end_date;
+
+		/* export newest timestamps to root folder*/
+		if((index+1) == timestamps.streams.length){
+			// loop through differing languages
+			for(i=0; i < config.config.descs.length; i++){
+			let desc_language = config.config.descs[i];
+
+			let path = 
+			config.config.export_to+
+			"["+desc_language.print_out_code+"] "
+			+"Newest timestamps";
+
+			let beforeDesc = fs.readFileSync(
+			desc_language.before_path, 'utf8');
+
+			let afterDesc = fs.readFileSync(
+			desc_language.after_path, 'utf8');
+
+			// add beforeDesc & afterDesc 
+			// for this speficic languages
+			streamtxt = beforeDesc+"\n"+streamtxt+
+				    "\n"+afterDesc
+			
+			// print out [tag]'ed timestamp files
+			fs.writeFile(path,
+			streamtxt, function(err){
+			if(err) console.error(err);});
+			}
+		}
+
+
+		// if we want to have extended dates on the exported file names.
 		if(config.config.turn_off_timestamp_extended_date == true) 
 		{
 			let res = currentStream.startdate.split("_");	
@@ -49,7 +79,7 @@ exports.exportAllTimestamps = function() {
 			let path = 
 			config.config.export_to+
 			desc_language.print_out_code+"/"+
-			"["+desc_language.print_out_code+"]"+
+			"["+desc_language.print_out_code+"]_"+
 			start_date+
 			"_to_"
 			+end_date;
@@ -84,9 +114,57 @@ exports.exportAllTimestamps = function() {
 		fs.writeFile(
 			path,
 			streamtxt, function(err){
-			if(err) console(err);
+			if(err) console.log(err);
 		});
 		}	
 	}
+	console.log("...");
+	console.log("Timestamps exported, thanks for using H.O.T");
+}
+
+exports.exportTimestampsOnly = function() {
+	let timestamps = infowrite.parseTimestamps(rawTimestamps, 
+		config.config);	
+
+	console.log(timestamps);
+
+
+	for(index = 0; index < timestamps.streams.length; index++) {
+			
+	// setup
+	let currentStream = timestamps.streams[index];	
+	let streamtxt = currentStream.timestamps.join("\r");	
+			
+	let start_date;
+	let end_date;
+
+	// if we want to have extended dates on the exported file names.
+	if(config.config.turn_off_timestamp_extended_date == true) 
+	{
+		let res = currentStream.startdate.split("_");	
+		start_date = res[0];
+		res = currentStream.enddate.split("_");
+		end_date = res[0];
+	}
+	else {
+		start_date = currentStream.startdate;
+		end_date = currentStream.enddate;
+	}
+
+		let path = config.config.export_to+"timestamps/"+
+			"[Timestamp]_"+
+			start_date+
+			"_to_"
+			+end_date;
+
+		console.log(path);
+
+		fs.writeFile(
+			path,
+			streamtxt, function(err){
+			if(err) console.log(err);
+		});
+	}
+
 }
 

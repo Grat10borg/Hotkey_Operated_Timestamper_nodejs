@@ -229,7 +229,27 @@ exports.parseTimestamps = function (raw_timestamps, config) {
 	 * 0:00:00 == 0:00
 	 */
 	function trimTimestamp(timestamp) {
-		return timestamp;
+  	// input: 0:07:28 Stream Time Marker OR 0:07:28
+  	// outputs: 7:28 (a perfect format timestamp)
+  	let res = timestamp.split(" "); // *8:07:28*, Stream, Time, Marker
+  	let DigitA = res[0].split(":"); // *8*, *07*, *28*
+  	if (DigitA[0] == "0") {
+    	// 8:07:28
+    	if (DigitA[1].match(/0\d/i)) {
+      	// 20:00
+      	if (DigitA[1].match(/00/i)) {
+        	DigitA[1] = DigitA[1].replace("00", "0");
+        	return DigitA[1] + ":" + DigitA[2]; // 20:00
+      	}
+      	DigitA[1] = DigitA[1].replace("0", "");
+      	return DigitA[1] + ":" + DigitA[2]; // 20:00
+    } 
+	else 
+	{
+      	return DigitA[1] + ":" + DigitA[2];
+    }
+  	} 
+	else { return res[0];}
 	}
 
 	function sortTimestamp(textline, config, isTimestamp, sceneName) {

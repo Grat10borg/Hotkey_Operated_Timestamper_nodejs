@@ -38,7 +38,9 @@ program.command('export')
   .description('exports all timestamps in your timestamp file')
   .action(exportstamp.exportAllTimestamps)
 
-
+program.command('timestamp')
+  .description('export all timestamps (without description)')
+  .action(exportstamp.exportTimestampsOnly)
 /*
  * draws the H.O.T logo with console logs
  */

@@ -11,6 +11,25 @@ const infowrite = require('./infowriter_parse');
 let rawTimestamps = fs.readFileSync(
 config.config.timestamp_path, 'utf8');
 
+// control if there is folders in current dir
+if(!fs.existsSync(config.config.export_to)){
+	// create exporting folder if its not there
+	fs.mkdir(config.config.export_to); // untested..
+}
+if(!fs.existsSync(config.config.export_to+"timestamps"))
+	fs.mkdir(config.config.export_to+"timestamps");
+
+// make sure theres folders for languages in config file..
+for(index = 0; index < config.config.descs.length; index++) {
+	let path = config.config.export_to+
+		config.config.descs[index].print_out_code;
+	if(!fs.existsSync(path)){
+		fs.mkdir(path);	
+	}
+}
+
+
+
 exports.exportAllTimestamps = function() {
 	let timestamps = infowrite.parseTimestamps(rawTimestamps, config.config);	
     // for looping and exporting all timestamps
@@ -84,8 +103,6 @@ exports.exportAllTimestamps = function() {
 			"_to_"
 			+end_date;
 
-			console.log(path);
-
 			let beforeDesc = fs.readFileSync(
 			desc_language.before_path, 'utf8');
 
@@ -119,15 +136,12 @@ exports.exportAllTimestamps = function() {
 		}	
 	}
 	console.log("...");
-	console.log("Timestamps exported, thanks for using H.O.T");
+	console.log("all timestamps exported, thanks for using H.O.T");
 }
 
 exports.exportTimestampsOnly = function() {
 	let timestamps = infowrite.parseTimestamps(rawTimestamps, 
 		config.config);	
-
-	console.log(timestamps);
-
 
 	for(index = 0; index < timestamps.streams.length; index++) {
 			
@@ -157,14 +171,12 @@ exports.exportTimestampsOnly = function() {
 			"_to_"
 			+end_date;
 
-		console.log(path);
-
 		fs.writeFile(
 			path,
 			streamtxt, function(err){
 			if(err) console.log(err);
 		});
 	}
-
+	console.log("only timestamps exported, thanks for using H.O.T");
 }
 

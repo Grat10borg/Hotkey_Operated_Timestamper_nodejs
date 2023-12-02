@@ -1,4 +1,4 @@
-./exports
-./export_timestamps.js.swp
-./index.js.swp
-.swp
+exports/
+index.js.swp
+*.swp
+*.txt

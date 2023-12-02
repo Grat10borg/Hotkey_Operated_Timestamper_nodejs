@@ -1,6 +1,7 @@
 // specifies the tag & gathering point for english timestamps
 let english = {
-	print_out_code: "eng",
+	// !cannot contain any filepath illigal symbols!
+	print_out_code: "eng", 
 	before_path: "./description/beforeTimestamps.txt",
 	after_path: "./description/afterTimestamps.txt",
 };
@@ -8,8 +9,6 @@ let english = {
 exports.config = {
 	timestamp_path: "timestamps.txt",
 	
-
-
 	// an array holding objects of differing languages.
 	descs: [
 		english

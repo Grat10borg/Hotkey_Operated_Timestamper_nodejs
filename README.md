@@ -64,4 +64,4 @@ theres an option to get info H.O.T collects to your desciptions, putting `[$date
 below is a list of avalible info imports
  - `[$date]` "starting date of the stream"
  - `[$enddate]` "ending date of the stream"
- - `[$game]` (<- not yet implimented) "Twitch catagory stream was in"
+ - `[$game]` "Twitch catagory stream was in" (<- not yet implimented)

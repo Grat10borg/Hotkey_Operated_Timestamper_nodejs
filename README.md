@@ -56,4 +56,12 @@ exports.config = {
 ```
 
 you can also add more langauges by making another object like the `english` one and adding it to the `descs` array on line 37
-``` `
+`
+
+## extra infomation for your description
+theres an option to get info H.O.T collects to your desciptions, putting `[$date]` will put in the starting date of the stream.
+
+below is a list of avalible info imports
+ - `[$date]` "starting date of the stream"
+ - `[$enddate]` "ending date of the stream"
+ - `[$game]` (<- not yet implimented) "Twitch catagory stream was in"

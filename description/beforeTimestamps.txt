@@ -1,1 +1,9 @@
-before timestamps...
+❰DESCRIPTION_START❱
+
+❮This is a VOD of [$game] timestamped for your enjoyment!❯
+
+Originally streamed on [$date] 
+ ⚠ https://www.twitch.tv/grat_grot10_berg ⚠
+
+
+⏻  Starting H.O.T..making chapters..

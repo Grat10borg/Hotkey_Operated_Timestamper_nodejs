@@ -6,12 +6,19 @@ let english = {
 	after_path: "./description/afterTimestamps.txt",
 };
 
+let danish = {
+	print_out_code: "dk",
+	before_path: "./description/dkBTimestamps.txt",
+	after_path: "./description/dkATimestamps.txt"
+};
+
 exports.config = {
-	timestamp_path: "timestamps.txt",
+	timestamp_path: "Timestamps.txt",
 	
 	// an array holding objects of differing languages.
 	descs: [
-		english
+		english,
+		danish
 	       ],
 	export_to: "./exports/",
 

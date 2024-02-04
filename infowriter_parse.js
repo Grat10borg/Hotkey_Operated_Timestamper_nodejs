@@ -62,6 +62,8 @@ exports.parseTimestamps = function (raw_timestamps, config) {
 	// end of stream/recording is detected.
 	let streamArr = [];
 	let recordArr = [];
+	let streamSet = new Set(); 
+	let recordSet = new Set();
 	let sceneName = ""; // holds most recent scene name
 
 	/*
@@ -129,8 +131,12 @@ exports.parseTimestamps = function (raw_timestamps, config) {
 		// if it's digit:digit,digit:digit,digit
 		let digitTest = textline[index].split(" ");
 		if(digitTest[0].match(/\d:\d\d:\d\d/)) {
-		  streamArr.push(sortTimestamp(textline[index], config, 
+		  if(streamSet.has(textline) != true) {
+		   streamArr.push(sortTimestamp(textline[index], config, 
 					isTimestamp, sceneName));
+		   streamSet.add(sortTimestamp(textline[index], config, 
+			isTimestamp, sceneName)); // add specific timestamp to set
+		  }
 		}
 	  }
 	  else {
@@ -139,8 +145,12 @@ exports.parseTimestamps = function (raw_timestamps, config) {
 		let digitTest = textline[index].split(" ");
 		if(digitTest[0].match(/\d:\d\d:\d\d/)) {
 			// sorts timestamps between scenes & timestamps
-	      recordArr.push(sortTimestamp(textline[index], config, 
+			if(recordSet.has(textline)) {
+	      	 recordArr.push(sortTimestamp(textline[index], config, 
 					isTimestamp, sceneName));
+			 recordSet.add(sortTimestamp(textline, config, 
+			  isTimestamp, sceneName));
+			}	
 		}
 	  }
 	
@@ -180,6 +190,7 @@ exports.parseTimestamps = function (raw_timestamps, config) {
 			  // save
 			  timestamps.streams.push(obj);
 			  streamArr = []; // clear
+			  streamSet.clear();
 	}
 	else if(textline[index].match(/EVENT:STOP\sRECORDING/)) {
 			/*Saving ending date of the recording*/
@@ -214,6 +225,7 @@ exports.parseTimestamps = function (raw_timestamps, config) {
 			  recordObj.timestamps = recordArr;
 			  timestamps.recordings.push(obj);
 			  recordArr = [];
+			  recordSet.clear();
 			  // clear recording array for next run
 			}
 			// clear incase there is 

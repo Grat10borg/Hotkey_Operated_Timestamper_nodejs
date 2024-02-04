@@ -1,1 +1,15 @@
-after timestamps..
+
+⏻ Stopping H.O.T, [$time] elapsed
+
+
+Description translation credits ⍾
+        🟆 English : Grat10borg
+        🟅 Danish  : Grat10borg
+
+Custom stream widgets ✀
+        🟆 H.O.T_nodejs (VOD timestamper)
+        🟂 Grat's Stream Chat (stream chat with profile pictures)
+        🟆 The Displayer [Grat's S-Chat] (displays videos on screen)
+        🟂 Illubot [Grat's S-Chat] (clipper & bot)
+
+❰DESCRIPTION_END❱

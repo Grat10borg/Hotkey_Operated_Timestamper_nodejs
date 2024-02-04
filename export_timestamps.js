@@ -38,8 +38,9 @@ exports.exportAllTimestamps = function() {
 
 		// setup
 		let currentStream = timestamps.streams[index];	
-		let streamtxt = currentStream.timestamps.join("\r");	
-	
+		let	streamtxt = currentStream.timestamps.join("\r");	
+		 
+
 		let start_date;
 		let end_date;
 
@@ -52,7 +53,7 @@ exports.exportAllTimestamps = function() {
 			let path = 
 			config.config.export_to+
 			"["+desc_language.print_out_code+"] "
-			+"Newest timestamps";
+			+"Newest timestamps"+".txt";
 
 			let beforeDesc = fs.readFileSync(
 			desc_language.before_path, 'utf8');
@@ -62,12 +63,12 @@ exports.exportAllTimestamps = function() {
 
 			// add beforeDesc & afterDesc 
 			// for this speficic languages
-			streamtxt = beforeDesc+"\n"+streamtxt+
+		    let	exporttxt = beforeDesc+"\n"+streamtxt+
 				    "\n"+afterDesc
 			
 			// print out [tag]'ed timestamp files
 			fs.writeFile(path,
-			streamtxt, function(err){
+			exporttxt, function(err){
 			if(err) console.error(err);});
 			}
 		}
@@ -93,7 +94,6 @@ exports.exportAllTimestamps = function() {
 			// loop through differing languages
 			for(i=0; i < config.config.descs.length; i++){
 			let desc_language = config.config.descs[i];
-
 				
 			let path = 
 			config.config.export_to+
@@ -101,7 +101,7 @@ exports.exportAllTimestamps = function() {
 			"["+desc_language.print_out_code+"]_"+
 			start_date+
 			"_to_"
-			+end_date;
+			+end_date+".txt";
 
 			let beforeDesc = fs.readFileSync(
 			desc_language.before_path, 'utf8');
@@ -111,12 +111,19 @@ exports.exportAllTimestamps = function() {
 
 			// add beforeDesc & afterDesc 
 			// for this speficic languages
-			streamtxt = beforeDesc+"\n"+streamtxt+
-				    "\n"+afterDesc
-			
+			//let exporttxt = beforeDesc+"\n"+streamtxt+
+			//	    "\n"+afterDesc
+
+			// creates a completed description then tests if theres []
+			let exporttxt = infoAdder(
+				beforeDesc+"\n"+streamtxt+"\n"+afterDesc, 
+				currentStream,
+				start_date,
+				end_date);
+
 			// print out [tag]'ed timestamp files
 			fs.writeFile(path,
-			streamtxt, function(err){
+			exporttxt, function(err){
 			if(err) console.error(err);});
 			}
 		}
@@ -180,3 +187,19 @@ exports.exportTimestampsOnly = function() {
 	console.log("only timestamps exported, thanks for using H.O.T");
 }
 
+// adds info to any [$date] in the users descriptions
+function infoAdder(description, stream, start_date, end_date) {
+	let ex_desc = description;
+	// replace known square brakets
+
+	// replace with start and end date of the stream
+	ex_desc = description.replaceAll("[$date]", start_date);
+	ex_desc = ex_desc.replaceAll("[$enddate]", end_date);
+
+	// twitch needed, what catagorie the stream was in
+	ex_desc = ex_desc.replaceAll("[$game]", "GAME NOT FOUND");
+
+
+	console.log(ex_desc);
+	return ex_desc;
+}
